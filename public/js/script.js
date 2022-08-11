@@ -2,6 +2,11 @@
 // import {axios} from ('axios')
 
 
+
+
+
+  
+
   // Log out author
   document.getElementById('logout').addEventListener('click', ()=>{
     fetch('/author/logout', {
@@ -11,6 +16,7 @@
     .then(data => {
       console.log(data);
       if(data.message="successful"){
+        localStorage.removeItem("loggedIn");
         window.location.href = '/';
       }
     }).catch(error=>{

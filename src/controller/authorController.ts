@@ -249,6 +249,7 @@ export async function deleteAccount(req:Request, res:Response, next:NextFunction
 
         await AuthorInstance.destroy({where:{id:req.authorId}})
         await BookInstance.destroy({where:{author_id:req.authorId}})
+        res.cookie('authorized', '', {maxAge:1})
         return res.status(200).json({
             message:`Your account has been deleted successfully`
         })

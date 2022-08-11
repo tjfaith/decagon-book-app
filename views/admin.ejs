@@ -135,6 +135,7 @@
                 console.log(response);
                 if (response.data.message){
                   alert(response.data.message)
+                  localStorage.removeItem("loggedIn");
                   window.location.href = "/"
                 }
               })
