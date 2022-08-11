@@ -29,18 +29,31 @@ async function getBooks(req, res, next) {
             offset,
             attributes: { exclude: ["updatedAt"] },
             order: [["createdAt", "DESC"]],
+            //   include:[
+            //     {
+            //         model: AuthorInstance ,
+            //         as: 'author',
+            //         attributes:['id', 'author']
+            //     }
+            // ]
         });
-        // res.status(200).json({
-        //     msg:"You have successfully fetch all Books",
-        //     totalBooks: record.count,
-        //     data:record.rows
-        // })
-        res.render("index", {
-            title: "Books",
-            totalBooks: record.count,
-            msg: "You have successfully fetch all Books",
-            data: record.rows,
-        });
+        const isJSONResp = req.headers['postman-token'];
+        if (isJSONResp) {
+            res.status(200).json({
+                msg: "You have successfully fetch all Books",
+                totalBooks: record.count,
+                data: record.rows
+            });
+        }
+        else {
+            res.status(200);
+            res.render("index", {
+                title: "Books",
+                totalBooks: record.count,
+                msg: "You have successfully fetch all Books",
+                data: record.rows,
+            });
+        }
     }
     catch (error) {
         console.log(error);
@@ -59,12 +72,17 @@ async function getSingleBook(req, res, next) {
                 Error: "book not found",
             });
         }
-        // res.status(200).json({
-        //   message: "Successfully gotten book information",
-        //   record,
-        // });
-        res.status(200);
-        res.render('components/update_book', { title: 'update', record });
+        const isJSONResp = req.headers['postman-token'];
+        if (isJSONResp) {
+            res.status(200).json({
+                message: "Successfully gotten book information",
+                record,
+            });
+        }
+        else {
+            res.status(200);
+            res.render('components/update_book', { title: 'update', record });
+        }
     }
     catch (error) {
         res.status(500).json({

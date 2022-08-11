@@ -51,3 +51,5 @@ BookInstance.init({
     tableName:'books'
 })
 
+// // BookInstance(AuthorInstance, {foreignKey:'author_id', as: 'books'})
+// AuthorInstance.belongsTo(BookInstance, {foreignKey:'author_id', as: 'authors'})

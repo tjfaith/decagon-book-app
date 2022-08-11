@@ -94,10 +94,13 @@ async function adminData(req, res, next) {
             });
         }
         console.log(data.dataValues);
-        // res.json({
-        //     msg:"Successful",
-        //     data:data
-        // })
+        const isJSONResp = req.headers['postman-token'];
+        if (isJSONResp) {
+            return res.json({
+                msg: "Successful",
+                data: data
+            });
+        }
         res.status(200);
         res.render("admin", { title: "admin", data });
     }
