@@ -126,13 +126,13 @@ export async function  createAuthor (req:Request, res:Response){
    
     if(await AuthorInstance.findOne({where:{email:req.body.email}})){
      return res.status(409).json({
-        msg:"Email already Exist, please login or change email"
+        message:"Email already Exist, please login or change email"
      })
     }
     
    await AuthorInstance.create(req.body)
    res.json({ message:'Author Created Successfully'})
-   res.redirect('/login')
+
    
     }catch(error){ 
      res.json({error, message:"Fail to create author", status:500, })
@@ -166,7 +166,7 @@ export async function updateAuthor(req:Request, res:Response, next:NextFunction)
            address:bodyData.address
         })
         res.status(200).json({
-            msg:'Data updated successfully',
+            message:'Data updated successfully',
             record: updateRecord
         })
     } catch (error) {
@@ -243,18 +243,18 @@ export async function deleteAccount(req:Request, res:Response, next:NextFunction
         const authorData = await AuthorInstance.findOne({where:{id:req.authorId}}) 
         if(!authorData){
             return res.status(404).json({
-                msg:`Oops! an error ocured`
+                message:`Oops! an error ocured`
             })
         }
 
         await AuthorInstance.destroy({where:{id:req.authorId}})
         await BookInstance.destroy({where:{author_id:req.authorId}})
         return res.status(200).json({
-            msg:`Your account has been deleted successfully`
+            message:`Your account has been deleted successfully`
         })
     } catch (error) {
         res.status(500).json({
-            msg:"failed delete Author"
+            message:"failed delete Author"
         })
     }
 }

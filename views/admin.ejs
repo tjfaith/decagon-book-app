@@ -24,11 +24,13 @@
           <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
             <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
             <!-- <li><a class="dropdown-item" href="#">Settings</a></li> -->
-            <li><a class="dropdown-item" href="#">Update Data</a></li>
+            <li><a class="dropdown-item" href="" data-toggle="modal" data-target="#updateData">Update Data</a></li>
             <li>
-              <hr class="dropdown-divider" />
             </li>
             <li><a class="dropdown-item" href="#" id="logout">Logout</a></li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li><a class="dropdown-item text-danger" href="#" id="delete_account">Delete Account</a></li>
           </ul>
         </div>
       </a>
@@ -87,6 +89,7 @@
 
 
   <%- include('./components/create_book.ejs') %>
+  <%- include('./components/update_author.ejs') %>
 
 
 
@@ -117,4 +120,29 @@
                 // login_error.innerHTML = err.response.data.message;
               });
           }
+
+
+
+          // DELETE ACCOUNT
+          document.getElementById("delete_account").addEventListener("click", () => {
+            if (confirm("Are you sure you want to delete your account? This action cannot be undone. ALL YOUR BOOKS WOULD BE DELETED AS WELL.")) {
+              
+          axios({
+              method: 'DELETE',
+              url: 'author/delete',
+            })
+              .then((response) => {
+                console.log(response);
+                if (response.data.message){
+                  alert(response.data.message)
+                  window.location.href = "/"
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+                // console.log(err.response.data.message);
+                // login_error.innerHTML = err.response.data.message;
+              });
+          }
+          })
         </script>
