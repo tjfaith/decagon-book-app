@@ -12,9 +12,6 @@ const router = express_1.default.Router();
 // res.render('index', { title: 'Express' });
 router.get('/', booksController_1.getBooks);
 router.get('/admin', auth_1.verifyToken, authorController_1.adminData);
-// router.get('/',(req, res)=>{
-//   res.render('index', getBooks)
-// })
 router.get('/signup', (req, res) => {
     res.render('signup', { title: 'signup' });
 });

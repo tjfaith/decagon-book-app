@@ -14,9 +14,6 @@ const router = express.Router();
   router.get('/', getBooks)
   router.get('/admin', verifyToken, adminData)
 
-  // router.get('/',(req, res)=>{
-  //   res.render('index', getBooks)
-  // })
 
 router.get('/signup', (req:express.Request, res:express.Response)=>{
   res.render('signup', {title:'signup'})

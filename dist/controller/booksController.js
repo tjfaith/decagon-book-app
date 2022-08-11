@@ -59,10 +59,12 @@ async function getSingleBook(req, res, next) {
                 Error: "book not found",
             });
         }
-        res.status(200).json({
-            msg: "Successfully gotten book information",
-            record,
-        });
+        // res.status(200).json({
+        //   message: "Successfully gotten book information",
+        //   record,
+        // });
+        res.status(200);
+        res.render('components/update_book', { title: 'update', record });
     }
     catch (error) {
         res.status(500).json({
@@ -94,7 +96,7 @@ async function updateBook(req, res, next) {
             isPublished,
         });
         res.status(200).json({
-            msg: `Update book with Id: ${id} was successfully`,
+            message: `successful`,
             record: updateRecord,
         });
     }
@@ -117,7 +119,7 @@ async function deleteBook(req, res, next) {
         }
         const deletedRecord = await record.destroy();
         return res.status(200).json({
-            msg: `Book with Id: ${id} was deleted successfully`,
+            message: `successful`,
             deletedRecord,
         });
     }
