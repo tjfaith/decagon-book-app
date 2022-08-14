@@ -13,9 +13,15 @@ const router = express_1.default.Router();
 router.get('/', booksController_1.getBooks);
 router.get('/admin', auth_1.verifyToken, authorController_1.adminData);
 router.get('/signup', (req, res) => {
+    if (req.cookies.authorized) {
+        return res.redirect('/admin');
+    }
     res.render('signup', { title: 'signup' });
 });
 router.get('/login', (req, res) => {
+    if (req.cookies.authorized) {
+        return res.redirect('/admin');
+    }
     res.render('login', { title: 'login' });
 });
 router.get('/dashboard', (req, res) => {

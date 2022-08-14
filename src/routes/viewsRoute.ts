@@ -16,13 +16,23 @@ const router = express.Router();
 
 
 router.get('/signup', (req:express.Request, res:express.Response)=>{
+  if(req.cookies.authorized){
+    return  res.redirect('/admin')
+  }
   res.render('signup', {title:'signup'})
 })
 
 router.get('/login', (req, res)=>{
+  console.log(req.cookies.authorized);
+  
+  if(req.cookies.authorized){
+    return  res.redirect('/admin')
+  }
   res.render('login', {title:'login'})
+
 })
 
+// router.get('/book/:id')
 router.get('/dashboard', (req, res)=>{
   res.render('dashboard', {title:"Author's Page"})
 })

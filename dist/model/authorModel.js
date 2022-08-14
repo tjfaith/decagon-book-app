@@ -21,6 +21,10 @@ AuthorInstance.init({
         type: DataTypes.STRING,
         allowNull: false
     },
+    author_icon: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     dateRegistered: {
         type: DataTypes.TIME,
         defaultValue: new Date().getTime(),
@@ -56,7 +60,7 @@ AuthorInstance.init({
     tableName: 'authors'
 });
 AuthorInstance.hasMany(booksModel_1.BookInstance, { foreignKey: 'author_id', as: 'books' });
-booksModel_1.BookInstance.belongsTo(AuthorInstance, { foreignKey: 'author_id', as: 'authors' });
+booksModel_1.BookInstance.belongsTo(AuthorInstance, { foreignKey: 'author_id', as: 'author' });
 // [
 //     {
 //       id: 1,

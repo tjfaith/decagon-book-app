@@ -7,7 +7,7 @@
   </style>
 
   <div class="d-flex">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light vh-100" style="width: 280px">
+    <div class="d-flex flex-column p-3 bg-light vh-100" style="width: 280px">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
         <svg class="bi me-2" width="40" height="32">
           <use xlink:href="#bootstrap" />
@@ -16,14 +16,12 @@
         <div class="dropdown">
           <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
             id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="" width="80" height="80" class="rounded-circle me-2" />
+            <img src="<%= data.author_icon %>" alt="" width="80" height="80" class="rounded-circle me-2" />
             <strong>
-              <%= data.author %>
+              <%= data.author.substring(0,10) %>...
             </strong>
           </a>
-          <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-            <!-- <li><a class="dropdown-item" href="#">New project...</a></li> -->
-            <!-- <li><a class="dropdown-item" href="#">Settings</a></li> -->
+          <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2"> 
             <li><a class="dropdown-item" href="" data-toggle="modal" data-target="#updateData">Update Data</a></li>
             <li>
             </li>
@@ -60,20 +58,20 @@
     <div class="container">
       <div class="justify-content-center">
         <div class="m-5 w-100 d-flex flex-wrap">
-          <% if (data.books.length>0){ data.books.forEach(books => { %>
+          <% if (data.books.length>0){ data.books.forEach(bkData => { %>
 
-            <a href="/books/<%= books.id %>" class="col-md-3 m-2 d-flex w-25"  >
+            <a href="/books/<%= bkData.id %>" class="col-md-3 m-2 d-flex w-75"  >
               <div class="card card-body flex-fill p-0">
-                <img class="card-img-top bookIcon h-100 w-100 img-fluid" src="<%= books.icon %>" alt="..." />
+                <img class="card-img-top bookIcon h-100 w-100 img-fluid" src="<%= bkData.icon %>" alt="..." />
                 <div class="card-body p-2">
                   <h5 class="fw-bolder text-center">
-                    <%= books.name %>
+                    <%= bkData.name %>
                   </h5>
                   <hr />
                   <div class="text-justify">
                     <small class="text-secondary" >Author:<%= data.author %></small><br />
-                    <small class="text-secondary">Serial Number: <%= books.serialNumber %></small><br />
-                    <small>Date published:<%= new Date(books.datePublished).toLocaleDateString() ; %></small>
+                    <small class="text-secondary">Serial Number: <%= bkData.serialNumber %></small><br />
+                    <small>Date published: <%= new Date(bkData.datePublished).toLocaleDateString() ; %> </small>
                   </div>
                 </div>
               </div>
@@ -146,4 +144,20 @@
               });
           }
           })
+
+          // Log out author
+document.getElementById("logout").addEventListener("click", () => {
+  fetch("/author/logout", {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if ((data.message = "successful")) {
+        window.location.href = "/";
+      }
+    })
+    .catch((error) => {
+      alert(error);
+    });
+});
         </script>

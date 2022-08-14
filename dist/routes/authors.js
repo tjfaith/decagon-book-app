@@ -8,7 +8,7 @@ const authorController_1 = require("../controller/authorController");
 const router = express_1.default.Router();
 const auth_1 = require("../middleware/auth");
 /* GET users listing. */
-router.get('/logout', auth_1.verifyToken, authorController_1.logoutAuthor);
+router.get('/logout', authorController_1.logoutAuthor);
 router.get('/', authorController_1.getAuthors);
 router.get('/:id', authorController_1.getSingleAuthor);
 router.post('/signup', authorController_1.createAuthor);

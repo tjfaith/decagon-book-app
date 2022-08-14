@@ -24,6 +24,14 @@ BookInstance.init({
         type: DataTypes.STRING,
         allowNull: true
     },
+    bookSummary: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    bookLink: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     isPublished: {
         type: DataTypes.BOOLEAN,
         allowNull: true
@@ -35,7 +43,7 @@ BookInstance.init({
     },
     serialNumber: {
         type: DataTypes.INTEGER,
-        autoIncrement: true
+        allowNull: false
     },
     author_id: {
         type: DataTypes.UUIDV4,
@@ -45,5 +53,7 @@ BookInstance.init({
     sequelize: database_config_1.default,
     tableName: 'books'
 });
+// BookInstance.hasOne(AuthorInstance, {primaryKey:'id', as: 'author'})
+// AuthorInstance.belongsTo(BookInstance, {foreignKey:'author_id', as: 'authors'})
 // // BookInstance(AuthorInstance, {foreignKey:'author_id', as: 'books'})
 // AuthorInstance.belongsTo(BookInstance, {foreignKey:'author_id', as: 'authors'})

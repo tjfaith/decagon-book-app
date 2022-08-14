@@ -17,6 +17,11 @@
             </div>
 
             <div class="form-group">
+              <label for="Name">Author's Icon</label>
+              <input type="url" class="form-control" name="author_icon" value="<%= data.author_icon %>" required />
+            </div>
+
+            <div class="form-group">
               <label for="Age">Age</label>
               <input type="number" class="form-control" id="bookIcon" name="age"  value="<%= data.age %>" required />
             
@@ -51,6 +56,7 @@ author_form.addEventListener("submit", (e) => {
 
   const form_data = {
           author: author_form.author.value,
+          author_icon: author_form.author_icon.value,
           age: author_form.age.value,
           email: author_form.email.value,
           address: author_form.address.value,

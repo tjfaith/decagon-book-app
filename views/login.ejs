@@ -102,7 +102,6 @@
         headers: {'Content-Type': 'application/json',}
     }).then(response=>{
         if(response.data.message="Login successful"){
-            localStorage.setItem("loggedIn", "loggedIn");
             window.location.href = "/admin"
         }else{
             login_error.innerHTML = response.data.message

@@ -64,7 +64,7 @@
     scroll-behavior: smooth;
   }
 }
-
+a:hover{text-decoration:none !important;}
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
@@ -224,8 +224,8 @@ sup {
 }
 
 a {
-  color: #0d6efd;
-  text-decoration: underline;
+  /* color: #0d6efd;
+  text-decoration: underline; */
 }
 a:hover {
   color: #0a58ca;
@@ -3460,7 +3460,7 @@ textarea.form-control-lg {
 .btn-link {
   font-weight: 400;
   color: #0d6efd;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 .btn-link:hover {
   color: #0a58ca;

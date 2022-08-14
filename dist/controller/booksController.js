@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteBook = exports.updateBook = exports.getSingleBook = exports.getBooks = exports.create_books = void 0;
 const booksModel_1 = require("../model/booksModel");
+const authorModel_1 = require("../model/authorModel");
 const utils_1 = require("../middleware/utils");
 async function create_books(req, res) {
     try {
@@ -29,13 +30,13 @@ async function getBooks(req, res, next) {
             offset,
             attributes: { exclude: ["updatedAt"] },
             order: [["createdAt", "DESC"]],
-            //   include:[
-            //     {
-            //         model: AuthorInstance ,
-            //         as: 'author',
-            //         attributes:['id', 'author']
-            //     }
-            // ]
+            include: [
+                {
+                    model: authorModel_1.AuthorInstance,
+                    as: 'author',
+                    attributes: ['id', 'author']
+                }
+            ]
         });
         const isJSONResp = req.headers['postman-token'];
         if (isJSONResp) {
@@ -56,7 +57,6 @@ async function getBooks(req, res, next) {
         }
     }
     catch (error) {
-        console.log(error);
         res.status(500).json({
             msg: "failed to read",
         });
@@ -66,7 +66,16 @@ exports.getBooks = getBooks;
 async function getSingleBook(req, res, next) {
     try {
         const { id } = req.params;
-        const record = await booksModel_1.BookInstance.findOne({ where: { id } });
+        const record = await booksModel_1.BookInstance.findOne({
+            where: { id },
+            include: [
+                {
+                    model: authorModel_1.AuthorInstance,
+                    as: 'author',
+                    attributes: ['id', 'author']
+                }
+            ]
+        });
         if (!record) {
             return res.status(404).json({
                 Error: "book not found",
@@ -81,7 +90,7 @@ async function getSingleBook(req, res, next) {
         }
         else {
             res.status(200);
-            res.render('components/update_book', { title: 'update', record });
+            res.render('components/single_book', { title: 'update', record });
         }
     }
     catch (error) {
@@ -95,7 +104,7 @@ exports.getSingleBook = getSingleBook;
 async function updateBook(req, res, next) {
     try {
         const { id } = req.params;
-        const { name, icon, isPublished } = req.body;
+        const { name, icon, isPublished, bookSummary, serialNumber, bookLink } = req.body;
         const validateResult = utils_1.UpdateBooksValidator.validate(req.body, utils_1.options);
         if (validateResult.error) {
             return res.status(400).json({
@@ -112,6 +121,9 @@ async function updateBook(req, res, next) {
             name,
             icon,
             isPublished,
+            bookSummary,
+            serialNumber,
+            bookLink
         });
         res.status(200).json({
             message: `successful`,

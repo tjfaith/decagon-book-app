@@ -3,7 +3,7 @@ import {createAuthor, getAuthors, getSingleAuthor, updateAuthor, deleteAccount, 
 const router = express.Router();
 import {verifyToken} from '../middleware/auth'
 /* GET users listing. */
-router.get('/logout', verifyToken,  logoutAuthor)
+router.get('/logout', logoutAuthor)
 router.get('/', getAuthors)
 router.get('/:id', getSingleAuthor)
 router.post('/signup', createAuthor)

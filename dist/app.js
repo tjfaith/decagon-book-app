@@ -13,8 +13,9 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // for showing response status on the console
 const morgan_1 = __importDefault(require("morgan"));
 const database_config_1 = __importDefault(require("./config/database.config"));
+const auth_1 = require("./middleware/auth");
 // Router import
-const index_1 = __importDefault(require("./routes/index"));
+const viewsRoute_1 = __importDefault(require("./routes/viewsRoute"));
 const book_1 = __importDefault(require("./routes/book"));
 const authors_1 = __importDefault(require("./routes/authors"));
 // {force:true}
@@ -44,7 +45,8 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.static(path_1.default.join("public")));
 // base route
-app.use("/", index_1.default);
+app.get('*', auth_1.checkUser);
+app.use("/", viewsRoute_1.default);
 app.use("/books", book_1.default);
 app.use("/author", authors_1.default);
 app.use(function (req, res, next) {

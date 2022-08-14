@@ -9,6 +9,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 // VALIDATOR FOR AUTHORS
 exports.CreateAuthorValidator = joi_1.default.object().keys({
     author: joi_1.default.string().lowercase().required(),
+    author_icon: joi_1.default.string().required(),
     age: joi_1.default.number().required(),
     email: joi_1.default.string().trim().lowercase().required(),
     password: joi_1.default.string().required(),
@@ -16,6 +17,7 @@ exports.CreateAuthorValidator = joi_1.default.object().keys({
 });
 exports.UpdateAuthorValidator = joi_1.default.object().keys({
     author: joi_1.default.string().lowercase(),
+    author_icon: joi_1.default.string(),
     age: joi_1.default.number(),
     email: joi_1.default.string(),
     password: joi_1.default.string(),
@@ -26,12 +28,17 @@ exports.CreateBooksValidator = joi_1.default.object().keys({
     name: joi_1.default.string().lowercase().required(),
     icon: joi_1.default.string().lowercase().required(),
     isPublished: joi_1.default.boolean().required(),
-    // author_Id:Joi.string().required()
+    serialNumber: joi_1.default.number().required(),
+    bookSummary: joi_1.default.string(),
+    bookLink: joi_1.default.string(),
 });
 exports.UpdateBooksValidator = joi_1.default.object().keys({
     name: joi_1.default.string().lowercase(),
     icon: joi_1.default.string().lowercase(),
     isPublished: joi_1.default.boolean(),
+    serialNumber: joi_1.default.number(),
+    bookSummary: joi_1.default.string(),
+    bookLink: joi_1.default.string(),
 });
 // GENERATE TOKEN 
 const generateToken = (userData) => {

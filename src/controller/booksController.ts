@@ -39,13 +39,13 @@ export async function getBooks(
       offset,
       attributes: { exclude: ["updatedAt"] },
       order: [["createdAt", "DESC"]],
-    //   include:[
-    //     {
-    //         model: AuthorInstance ,
-    //         as: 'author',
-    //         attributes:['id', 'author']
-    //     }
-    // ]
+      include:[
+        {
+            model: AuthorInstance,
+            as: 'author',
+            attributes:['id', 'author']
+        }
+    ]
     });
   
 
@@ -67,8 +67,6 @@ export async function getBooks(
     });
 }
   } catch (error) {
-    console.log(error);
-
     res.status(500).json({
       msg: "failed to read",
     });
@@ -82,7 +80,16 @@ export async function getSingleBook(
 ) {
   try {
     const { id } = req.params;
-    const record = await BookInstance.findOne({ where: { id } });
+    const record = await BookInstance.findOne({ 
+      where: { id },
+      include:[
+        {
+            model: AuthorInstance,
+            as: 'author',
+            attributes:['id', 'author']
+        }
+    ] 
+    });
     if (!record) {
       return res.status(404).json({
         Error: "book not found",
@@ -98,7 +105,7 @@ export async function getSingleBook(
     });
     }else{
     res.status(200)
-    res.render('components/update_book', {title:'update', record})
+    res.render('components/single_book', {title:'update', record})
     }
   } catch (error) {
     res.status(500).json({
@@ -115,7 +122,7 @@ export async function updateBook(
 ) {
   try {
     const { id } = req.params;
-    const { name, icon, isPublished } = req.body;
+    const { name, icon, isPublished, bookSummary, serialNumber, bookLink } = req.body;
     const validateResult = UpdateBooksValidator.validate(req.body, options);
     if (validateResult.error) {
       return res.status(400).json({
@@ -132,6 +139,9 @@ export async function updateBook(
       name,
       icon,
       isPublished,
+      bookSummary,
+      serialNumber,
+      bookLink
     });
     res.status(200).json({
       message: `successful`,

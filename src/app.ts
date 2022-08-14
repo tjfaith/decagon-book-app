@@ -12,9 +12,10 @@ import cookieParser from "cookie-parser";
 // for showing response status on the console
 import logger from "morgan";
 import db from './config/database.config';
+import {checkUser} from './middleware/auth'
 
 // Router import
-import indexRouter from "./routes/index";
+import indexRouter from "./routes/viewsRoute";
 import bookRouter from "./routes/book";
 import authorRouter from "./routes/authors";
 // {force:true}
@@ -55,6 +56,7 @@ app.use(cookieParser());
 app.use(express.static(path.join("public")));
 
 // base route
+app.get('*', checkUser)
 app.use("/", indexRouter);
 app.use("/books", bookRouter);
 app.use("/author", authorRouter);

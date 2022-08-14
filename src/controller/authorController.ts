@@ -47,7 +47,7 @@ export async function getSingleAuthor(req:Request, res:Response, next:NextFuncti
                 {
                     model: BookInstance,
                     as: 'books',
-                    attributes:['id', 'name', 'isPublished', 'serialNumber']
+                    attributes:['id', 'name', 'isPublished', 'datePublished', 'serialNumber']
                 }
             ]
         }) 
@@ -74,13 +74,13 @@ export async function adminData(req:Request, res:Response, next:NextFunction){
       
         const data = await AuthorInstance.findOne({
             where:{id:req.authorId},
-            attributes:['id', 'author', 'dateRegistered', 'age', 'email','address'],
+            attributes:['id', 'author', 'author_icon', 'dateRegistered', 'age', 'email','address'],
             order: [["createdAt", "DESC"]],
             include:[
                 {
                     model: BookInstance,
                     as: 'books', 
-                    attributes:['id', 'name', 'icon', 'isPublished', 'serialNumber', 'createdAt'],
+                    attributes:['id', 'name', 'icon', 'isPublished', 'datePublished', 'serialNumber', 'createdAt'],
                 
                     
                 }
@@ -103,6 +103,8 @@ export async function adminData(req:Request, res:Response, next:NextFunction){
          res.render("admin", {title:"admin", data})
        
     } catch (error) {
+        console.log(error);
+        
         res.status(500).json({
             msg:"failed get author",
             route:'/:id'
@@ -162,6 +164,7 @@ export async function updateAuthor(req:Request, res:Response, next:NextFunction)
         }
         const updateRecord = await data.update({ 
            author:bodyData.author,
+           author_icon:bodyData.author_icon,
            age:bodyData.age,
            email:bodyData.email,
            password:bodyData.password,
@@ -205,7 +208,7 @@ export async function loginAuthor(req:Request, res:Response, next:NextFunction){
         if(await bcrypt.compare(req.body.password, data.password )){
             const token = generateToken(data.id) 
             res.cookie('authorized', token, { httpOnly:true, maxAge:1000*60*60*24})
-            res.cookie('author_id', data.id, {httpOnly:true, maxAge:1000*60*60*24})
+            // res.cookie('author_id', data.id, {httpOnly:true, maxAge:1000*60*60*24})
             // console.log(token);
             
            res.status(200).json({
@@ -230,7 +233,21 @@ export async function loginAuthor(req:Request, res:Response, next:NextFunction){
     }
 }
 
+// LOGOUT FUNCTIONALITY
 export async function logoutAuthor(req:Request, res:Response){
+    const isJSONResp = req.headers['postman-token']
+    if (isJSONResp){
+        
+        if(!req.cookies.authorized){
+           return res.status(200).json({
+                message:"successful",
+            })
+        }
+    }else{
+        if(!req.cookies.authorized){
+            return res.redirect('/')
+        }
+    }
    
     res.cookie('authorized', '', {maxAge:1})
     res.status(200).json({

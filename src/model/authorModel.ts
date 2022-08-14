@@ -5,6 +5,7 @@ import { BookInstance } from '../model/booksModel'
 interface AuthorAttribute{
     id:string;
     author:string;
+    author_icon:string;
     dateRegistered:string,
     age:number;
     email:string;
@@ -22,6 +23,10 @@ AuthorInstance.init({
       allowNull:false,
     },
     author:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
+    author_icon:{
         type:DataTypes.STRING,
         allowNull:false
     },
@@ -61,7 +66,7 @@ AuthorInstance.init({
 })
 
 AuthorInstance.hasMany(BookInstance, {foreignKey:'author_id', as: 'books'})
-BookInstance.belongsTo(AuthorInstance, {foreignKey:'author_id', as: 'authors'})
+BookInstance.belongsTo(AuthorInstance, {foreignKey:'author_id', as: 'author'})
 
 // [
 //     {
