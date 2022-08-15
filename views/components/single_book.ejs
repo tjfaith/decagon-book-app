@@ -6,17 +6,15 @@
       <div class="col-md-4">
         <div class="m-5 col-md-10 d-flex">
           <div class="card card-body flex-fill p-0">
-
             <img class="card-img-top bookIcon h-100 w-100 img-fluid" src="<%= record.icon %>" alt="..." />
             <div class="card-body p-2">
               <div class="d-flex justify-content-between">
-
                 <a href="<%= record.bookLink %>" target="_blank" class="btn btn-success w-50 m-1">Download </a>
-                <% if (loggedIn){ %>
+                <% if (loggedIn && loggedIn.id === record.author.id){ %>
                   <button class="btn btn-primary w-50 m-1" data-toggle="modal" data-target="#updateBook">Update Data </button>
                   <% } %>
               </div>
-              <% if (loggedIn){ %>
+              <% if (loggedIn && loggedIn.id === record.author.id){ %>
                 <hr>
                 <button class="btn btn-danger m-1" id="delete_book">Delete Book </button>
                 <% } %>
