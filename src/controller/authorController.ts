@@ -199,8 +199,6 @@ export async function loginAuthor(req:Request, res:Response, next:NextFunction){
             res.status(401).json({ 
                 message:"Author not found" 
             })
-            
-
             // return res.status(404).json({
             //     message:"Author not found"
             // })
