@@ -48,8 +48,6 @@ export async function getBooks(
     ]
     });
   
-
-    
     const isJSONResp = req.headers['postman-token']
     if (isJSONResp){
         res.status(200).json({
