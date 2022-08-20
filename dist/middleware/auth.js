@@ -38,7 +38,6 @@ async function verifyToken(req, res, next) {
     }
     catch (error) {
         res.redirect("/");
-        // res.status(403).json({Error: "Unauthorized"});
     }
 }
 exports.verifyToken = verifyToken;

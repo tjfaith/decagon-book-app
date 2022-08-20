@@ -93,6 +93,7 @@ async function adminData(req, res, next) {
                 Error: "Author not found"
             });
         }
+        console.log(data.dataValues);
         const isJSONResp = req.headers['postman-token'];
         if (isJSONResp) {
             return res.json({
@@ -117,6 +118,7 @@ async function createAuthor(req, res) {
     try {
         const validateResult = utils_1.CreateAuthorValidator.validate(req.body, utils_1.options);
         const salt = await bcrypt_1.default.genSalt();
+        console.log(req.body.password);
         req.body.password = await bcrypt_1.default.hash(req.body.password, salt);
         if (validateResult.error) {
             return res.status(400).json({
@@ -179,14 +181,19 @@ exports.updateAuthor = updateAuthor;
 // LOGIN FUNCTIONALITY
 async function loginAuthor(req, res, next) {
     try {
+        console.log(req.body);
         const data = await authorModel_1.AuthorInstance.findOne({
             where: { email: req.body.email },
             // attributes:{ exclude: ['createdAt','updatedAt'] }
         });
         if (!data) {
+            // console.log('what is wrong with u');
             res.status(401).json({
                 message: "Author not found"
             });
+            // return res.status(404).json({
+            //     message:"Author not found"
+            // })
         }
         else {
             if (await bcrypt_1.default.compare(req.body.password, data.password)) {
