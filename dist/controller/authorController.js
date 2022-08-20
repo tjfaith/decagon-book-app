@@ -181,6 +181,7 @@ exports.updateAuthor = updateAuthor;
 // LOGIN FUNCTIONALITY
 async function loginAuthor(req, res, next) {
     try {
+        console.log(req.body);
         const data = await authorModel_1.AuthorInstance.findOne({
             where: { email: req.body.email },
             // attributes:{ exclude: ['createdAt','updatedAt'] }

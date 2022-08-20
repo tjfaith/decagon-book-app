@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // catch error
 const http_errors_1 = __importDefault(require("http-errors"));
 const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
 // resolve path
 const path_1 = __importDefault(require("path"));
 // for catching cookies
@@ -39,6 +40,7 @@ app.use((0, connect_livereload_1.default)());
 // view engine setup
 app.set("views", path_1.default.join(__dirname, "..", "views"));
 app.set("view engine", "ejs");
+app.use((0, cors_1.default)());
 app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));

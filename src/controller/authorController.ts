@@ -186,7 +186,7 @@ export async function updateAuthor(req:Request, res:Response, next:NextFunction)
 // LOGIN FUNCTIONALITY
 export async function loginAuthor(req:Request, res:Response, next:NextFunction){
     try {
-        
+    console.log(req.body)
         const data = await AuthorInstance.findOne({
             where:{email: req.body.email},
             // attributes:{ exclude: ['createdAt','updatedAt'] }
